@@ -1,10 +1,9 @@
-import { Response } from "express"
 import { sendEmail } from "../mailer/mailer"
 import Usuario, { IUser } from "../models/usuario"
 import { errors } from "../errors"
 
 
-export const existeEmail = async( email: string , res: Response ): Promise<void> => {
+export const existeEmail = async( email: string  ): Promise<void> => {
 
   const existeEmail: IUser | null = await Usuario.findOne({email})
 
