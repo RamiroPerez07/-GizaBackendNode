@@ -11,6 +11,7 @@ export const verificarMailUsuario = async (req: Request, res: Response, next: Ne
 
   if (usuario && usuario.verified) {
     res.status(400).json({
+      usuario,
       msg: errors.USUARIO_EXISTENTE_VERIFICADO
     })
     return
@@ -19,6 +20,7 @@ export const verificarMailUsuario = async (req: Request, res: Response, next: Ne
   if (usuario && !usuario.verified) {
     await sendEmail(email, usuario.code as string)
     res.status(400).json({
+      usuario,
       msg: errors.USUARIO_EXISTENTE_NO_VERIFICADO
     })
     return
