@@ -30,7 +30,8 @@ export const register = async (req: Request, res: Response) => {
   await sendEmail(email, newCode);
 
   res.status(201).json({
-    usuario
+    usuario,
+    msg : "USUARIO_CREADO_EXITOSAMENTE"
   })
 
 }

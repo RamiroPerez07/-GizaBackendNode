@@ -3,6 +3,7 @@ import { register, login, verifyUser } from "../controllers/auth";
 import { check } from "express-validator";
 import { recolectarErrores } from "../middlewares/recolectarErrores";
 import { existeEmail } from "../helpers/validacionesDB";
+import { verificarMailUsuario } from "../middlewares/verificarMailUsuario";
 
 
 const router = Router()
@@ -14,7 +15,8 @@ router.post(
     check("usuarioNombre", "El nombre de usuario debe ser de 6 caracteres mínimo").isLength({min: 6}),
     check("email","El email es obligatorio").isEmail(),
     check("password", "El password debe ser de 6 caracteres mínimo").isLength({min: 6}),
-    check("email").custom(existeEmail),
+    verificarMailUsuario,
+    //check("email").custom(existeEmail),
     recolectarErrores
   ],
   register
