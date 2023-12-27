@@ -33,7 +33,7 @@ export class Server{
 
   middlewares():void{
     this.app.use(express.json())
-    this.app.use(cors({origin: '*'}))  //para hacer el deploy de la api
+    this.app.use(cors())  //para hacer el deploy de la api
   }
 
   routes(): void {

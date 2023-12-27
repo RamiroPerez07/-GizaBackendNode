@@ -9,8 +9,8 @@ interface IItem {
 
 interface IDetalleOrden{
   contacto: String;
+  documento: String;
   telefono: String;
-  mail: String;
 }
 
 export interface IOrder {
@@ -64,7 +64,7 @@ const OrderSchema = new Schema<IOrder>({
       type: String,
       required: true,
     },
-    mail: {
+    documento: {
       type: String,
       required: true,
     }
