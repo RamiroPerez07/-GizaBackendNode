@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express"
 import jwt, { JwtPayload } from "jsonwebtoken"
 import Usuario, { IUser } from "../models/usuario";
+import { errors } from "../errors";
 
 const validarJWT = async (req: Request, res: Response, next: NextFunction) => {
   
@@ -35,7 +36,7 @@ const validarJWT = async (req: Request, res: Response, next: NextFunction) => {
   } catch (error) {
     console.log(error);
     res.status(401).json({
-      msg:"Token no válido"
+      msg: errors.TOKEN_NO_VALIDO
     })
   }
 
