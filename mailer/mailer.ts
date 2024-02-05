@@ -34,3 +34,24 @@ export const sendEmail = async (to: string, cod: string): Promise<void> => {
     console.log("Error al enviar el correo electrónico: ", error)
   }
 }
+
+export const sendEmailForgotPassword = async (to: string, token: string): Promise<void> => {
+  const mailOptions = {
+    from: '"Giza" gizaperfum@gmail.com',
+    to,
+    subject: "Recuperar contraseña - Giza Perfum",
+    html: `
+      <p>¡Hola! Nos indicaste que olvidaste tu contraseña. Para recuperarla, ingresá al siguiente link y generá una nueva:</p>
+      <a href="http://localhost:3000/restablecer-clave?token=${token}">Restablecer clave</a>
+    `
+  }
+
+  try {
+
+    await transporter.sendMail(mailOptions);
+    console.log("Correo electrónico enviado")
+  
+  } catch (error) {
+    console.log("Error al enviar el correo electrónico: ", error)
+  }
+}

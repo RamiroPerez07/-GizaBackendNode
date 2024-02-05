@@ -3,7 +3,7 @@ import Usuario, { IUser } from "../models/usuario";
 import bcryptjs from "bcryptjs";
 import { ROLES } from "../helpers/constants";
 import randomstring from "randomstring";
-import { sendEmail } from "../mailer/mailer";
+import { sendEmail, sendEmailForgotPassword } from "../mailer/mailer";
 import { generarJWT } from "../helpers/generarJWT";
 
 export const register = async (req: Request, res: Response) => {
@@ -124,4 +124,39 @@ export const verifyUser = async (req: Request, res: Response) => {
     })
   }
 
+}
+
+export const forgotPassword = async (req: Request, res: Response) => {
+  //obtengo el email de donde estoy olvidando la contraseña
+  const {email} = req.body
+  //con el email obtengo el id del usuario
+  try {
+    const usuario = await Usuario.findOne({email})
+
+    //si no existe el usuario, arrojo un mensaje que no existe en la base de datos
+    if (!usuario){
+      res.status(404).json({
+        msg: "No se encontró el mail en la BD"
+      });
+      return
+    }
+    //controlo si el usuario esta verificado, sino arrojo error
+    if(!usuario.verified) {
+      res.status(400).json({
+        msg: "El usuario aun no se encuentra verificado."
+      });
+      return
+    }
+    //teniendo el id del usuario, genero el token
+    const token = await generarJWT(usuario.id);
+
+    //con el token, voy a enviar un correo al mail con el link de acceso
+    await sendEmailForgotPassword(email,token)
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      msg: "Error en el servidor"
+    })
+  }
 }

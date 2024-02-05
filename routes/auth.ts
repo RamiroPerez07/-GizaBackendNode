@@ -1,5 +1,5 @@
 import { Router} from "express";
-import { register, login, verifyUser } from "../controllers/auth";
+import { register, login, verifyUser, forgotPassword } from "../controllers/auth";
 import { check } from "express-validator";
 import { recolectarErrores } from "../middlewares/recolectarErrores";
 import { existeEmail } from "../helpers/validacionesDB";
@@ -32,6 +32,10 @@ router.post(
     recolectarErrores
   ],
   login
+)
+
+router.post("/forgot-password",
+  forgotPassword
 )
 
 router.patch(
