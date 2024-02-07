@@ -133,8 +133,10 @@ export const forgotPassword = async (req: Request, res: Response) => {
   try {
     const usuario = await Usuario.findOne({email})
 
+    console.log(usuario)
+
     //si no existe el usuario, arrojo un mensaje que no existe en la base de datos
-    if (!usuario){
+    if (!usuario || usuario === undefined){
       res.status(404).json({
         msg: "No se encontró el mail en la BD"
       });
@@ -152,6 +154,10 @@ export const forgotPassword = async (req: Request, res: Response) => {
 
     //con el token, voy a enviar un correo al mail con el link de acceso
     await sendEmailForgotPassword(email,token)
+
+    res.status(200).json({
+      msg: "Mail enviado con éxito"
+    })
 
   } catch (error) {
     console.log(error);
