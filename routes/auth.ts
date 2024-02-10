@@ -50,7 +50,7 @@ router.patch(
   verifyUser
 )
 
-router.get("/get-user-by-tokenid",
+router.post("/get-user-by-tokenid",
   [
     check("token","El token es obligatorio").not().isEmpty(),
     validarJWT,
