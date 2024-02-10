@@ -183,3 +183,22 @@ export const getUserByTokenId = async (req: Request, res: Response) => {
     token
   })
 } 
+
+export const recoveryPassword = async (req: Request, res: Response) => {
+
+  //obtengo el usuario confirmado del cuerpo de la peticion
+  const {usuarioConfirmado,password} = req.body;
+
+  const salt = bcryptjs.genSaltSync();
+
+  const passwordHash = bcryptjs.hashSync(password, salt);
+
+  //cambio las contraseñas 
+  await Usuario.findOneAndUpdate(
+    {email: usuarioConfirmado.email},
+    {password: passwordHash})
+
+    res.status(200).json({
+      msg: "La contraseña se cambio exitosamente"
+    })
+}
