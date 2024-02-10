@@ -175,7 +175,7 @@ export const getUserByTokenId = async (req: Request, res: Response) => {
   const {usuarioConfirmado} = req.body;
 
   //genero un token para guardar el id del usuario y refrescar
-  const token = generarJWT(usuarioConfirmado.id)
+  const token = await generarJWT(usuarioConfirmado.id)
 
   //finalmente devuelvo el usuario y el token
   res.status(200).json({
