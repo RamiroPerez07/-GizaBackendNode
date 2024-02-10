@@ -1,9 +1,10 @@
 import { Router} from "express";
-import { register, login, verifyUser, forgotPassword } from "../controllers/auth";
+import { register, login, verifyUser, forgotPassword, getUserByTokenId } from "../controllers/auth";
 import { check } from "express-validator";
 import { recolectarErrores } from "../middlewares/recolectarErrores";
-import { existeEmail } from "../helpers/validacionesDB";
+//import { existeEmail } from "../helpers/validacionesDB";
 import { verificarMailUsuario } from "../middlewares/verificarMailUsuario";
+import validarJWT from "../middlewares/validarJWT";
 
 
 const router = Router()
@@ -47,6 +48,15 @@ router.patch(
     recolectarErrores
   ],
   verifyUser
+)
+
+router.get("/get-user-by-tokenid",
+  [
+    check("token","El token es obligatorio").not().isEmpty(),
+    validarJWT,
+    recolectarErrores
+  ],
+  getUserByTokenId
 )
 
 

@@ -5,6 +5,7 @@ import { ROLES } from "../helpers/constants";
 import randomstring from "randomstring";
 import { sendEmail, sendEmailForgotPassword } from "../mailer/mailer";
 import { generarJWT } from "../helpers/generarJWT";
+import { errors } from "../errors";
 
 export const register = async (req: Request, res: Response) => {
   const { usuarioNombre, email, password, rol }: IUser = req.body
@@ -126,14 +127,14 @@ export const verifyUser = async (req: Request, res: Response) => {
 
 }
 
+
+
 export const forgotPassword = async (req: Request, res: Response) => {
   //obtengo el email de donde estoy olvidando la contraseña
   const {email} = req.body
   //con el email obtengo el id del usuario
   try {
     const usuario = await Usuario.findOne({email})
-
-    console.log(usuario)
 
     //si no existe el usuario, arrojo un mensaje que no existe en la base de datos
     if (!usuario || usuario === undefined){
@@ -166,3 +167,19 @@ export const forgotPassword = async (req: Request, res: Response) => {
     })
   }
 }
+
+
+export const getUserByTokenId = async (req: Request, res: Response) => {
+
+  //obtengo el usuario confirmado del cuerpo de la peticion
+  const {usuarioConfirmado} = req.body;
+
+  //genero un token para guardar el id del usuario y refrescar
+  const token = generarJWT(usuarioConfirmado.id)
+
+  //finalmente devuelvo el usuario y el token
+  res.status(200).json({
+    usuario: usuarioConfirmado,
+    token
+  })
+} 
