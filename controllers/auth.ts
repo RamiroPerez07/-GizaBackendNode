@@ -193,7 +193,7 @@ export const recoveryPassword = async (req: Request, res: Response) => {
 
   if (validarPassword){
     res.status(400).json({
-      msg: "La contraseña no puede ser igual a la anterior."
+      msg: errors.CLAVE_IGUAL_A_ANTERIOR,
     })
     return
   }
