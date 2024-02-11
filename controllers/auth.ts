@@ -207,7 +207,35 @@ export const recoveryPassword = async (req: Request, res: Response) => {
     {email: usuarioConfirmado.email},
     {password: passwordHash})
 
-    res.status(200).json({
-      msg: "La contraseña se cambio exitosamente"
-    })
+  res.status(200).json({
+    msg: "La contraseña se cambio exitosamente"
+  });
+}
+
+
+export const changePassword = async(req: Request, res: Response) => {
+  //rescato las contraseñas del body
+  const {oldpassword, newpassword, usuarioConfirmado} = req.body
+
+  const validarPassword = bcryptjs.compareSync(oldpassword, usuarioConfirmado.password)
+
+  if (!validarPassword){
+    res.status(400).json({
+      msg: errors.CLAVE_NO_COINCIDENTE,
+    });
+    return
+  }
+
+  const salt = bcryptjs.genSaltSync();
+
+  const passwordHash = bcryptjs.hashSync(newpassword, salt);
+
+  //cambio las contraseñas 
+  await Usuario.findOneAndUpdate(
+    {email: usuarioConfirmado.email},
+    {password: passwordHash})
+
+  res.status(200).json({
+    msg: "La contraseña se cambio exitosamente"
+  });
 }
