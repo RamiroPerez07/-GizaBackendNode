@@ -189,6 +189,15 @@ export const recoveryPassword = async (req: Request, res: Response) => {
   //obtengo el usuario confirmado del cuerpo de la peticion
   const {usuarioConfirmado,password} = req.body;
 
+  const validarPassword = bcryptjs.compareSync(password, usuarioConfirmado.password)
+
+  if (validarPassword){
+    res.status(400).json({
+      msg: "La contraseña no puede ser igual a la anterior."
+    })
+    return
+  }
+
   const salt = bcryptjs.genSaltSync();
 
   const passwordHash = bcryptjs.hashSync(password, salt);
