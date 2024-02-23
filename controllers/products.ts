@@ -49,11 +49,11 @@ export const getProductsByFilters = async (req: Request, res: Response) => {
 
     const products = await Product.find({marca: marca,categoria: categoria});
 
-    console.log(products)
+    const filterProducts = products.filter(p => p.precio>= precioEntre[0] && p.precio<= precioEntre[1])
 
     res.status(200).json({
       data : [
-        ...products
+        ...filterProducts
       ]
     })
     
