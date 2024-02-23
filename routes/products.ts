@@ -18,7 +18,7 @@ router.post("/",
     check("categoria", "La categoria es obligatoria").not().isEmpty(),
     check("precio", "El precio es obligatorio").not().isEmpty().isNumeric(),
     check("imagen", "La imagen es obligatoria").not().isEmpty(),
-    check("descuento", "La descuento es obligatorio").not().isEmpty().isNumeric(),
+    check("descuento", "La descuento debe ser un valor numérico").isNumeric(),
     recolectarErrores
   ],
   createProduct
