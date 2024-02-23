@@ -74,7 +74,7 @@ export const login = async (req: Request, res: Response):Promise<void> => {
   } catch (error) {
     console.log(error);
     res.status(500).json({
-      msg: "Error en el servidor"
+      msg: errors.ERROR_EN_EL_SERVIDOR,
     })
   }
 

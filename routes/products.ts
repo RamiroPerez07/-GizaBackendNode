@@ -4,7 +4,7 @@ import validarJWT from "../middlewares/validarJWT";
 import { recolectarErrores } from "../middlewares/recolectarErrores";
 import { check } from "express-validator";
 import { isAdmin } from "../middlewares/validarRol";
-import { createProduct } from "../controllers/products";
+import { createProduct, getProducts } from "../controllers/products";
 
 const router = Router();
 
@@ -23,6 +23,8 @@ router.post("/",
   ],
   createProduct
 )
+
+router.get("/", getProducts)
 
 export default router
 
