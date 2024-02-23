@@ -47,7 +47,17 @@ export const getProductsByFilters = async (req: Request, res: Response) => {
 
   try {
 
-    const products = await Product.find({marca: marca,categoria: categoria});
+    let condicion = {} //inicio el objeto de la condicion
+
+    if (marca !== ""){
+      condicion = {...condicion, marca}
+    }
+
+    if (categoria !== ""){
+      condicion = {...condicion, categoria}
+    }
+
+    const products = await Product.find(condicion);
 
     const filterProducts = products.filter(p => p.precio>= precioEntre[0] && p.precio<= precioEntre[1])
 
