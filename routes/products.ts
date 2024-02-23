@@ -4,7 +4,7 @@ import validarJWT from "../middlewares/validarJWT";
 import { recolectarErrores } from "../middlewares/recolectarErrores";
 import { check } from "express-validator";
 import { isAdmin } from "../middlewares/validarRol";
-import { createProduct, getProducts } from "../controllers/products";
+import { createProduct, getProducts, getProductsByFilters } from "../controllers/products";
 
 const router = Router();
 
@@ -25,6 +25,8 @@ router.post("/",
 )
 
 router.get("/", getProducts)
+
+router.post("/filter-products",getProductsByFilters) //marca, categoria, precioEntre
 
 export default router
 

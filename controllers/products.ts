@@ -24,7 +24,6 @@ export const createProduct = async (req: Request, res: Response) => {
 }
 
 export const getProducts = async (req: Request, res: Response) => {
-
   try {
 
     const products = await Product.find({});
@@ -40,7 +39,27 @@ export const getProducts = async (req: Request, res: Response) => {
       msg: errors.ERROR_EN_EL_SERVIDOR,
     })
   }
+}
 
-  
+export const getProductsByFilters = async (req: Request, res: Response) => {
 
+  const {marca, categoria, precioEntre} = req.body
+
+  try {
+
+    const products = await Product.find({marca: marca,categoria: categoria});
+
+    console.log(products)
+
+    res.status(200).json({
+      data : [
+        ...products
+      ]
+    })
+    
+  } catch (error) {
+    res.status(500).json({
+      msg: errors.ERROR_EN_EL_SERVIDOR,
+    })
+  }
 }
