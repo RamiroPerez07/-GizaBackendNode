@@ -11,7 +11,6 @@ export const createProduct = async (req: Request, res: Response) => {
     ...productData,
     creadoPor: usuarioId,
     createdAt: new Date(),
-    estado: "Activo"
   }
 
   const product = new Product(data);

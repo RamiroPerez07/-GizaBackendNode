@@ -24,6 +24,8 @@ router.post("/",
   createProduct
 )
 
+export default router
+
 /*
   descripcion: String;
   marca: String;
