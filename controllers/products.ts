@@ -43,7 +43,7 @@ export const getProducts = async (req: Request, res: Response) => {
 
 export const getProductsByFilters = async (req: Request, res: Response) => {
 
-  const {marca, categoria, precioEntre} = req.body
+  const {marca, categoria, precioEntre, descripcion} = req.body
 
   try {
 
@@ -59,7 +59,13 @@ export const getProductsByFilters = async (req: Request, res: Response) => {
 
     const products = await Product.find(condicion);
 
-    const filterProducts = products.filter(p => p.precio>= precioEntre[0] && p.precio<= precioEntre[1])
+    let filterProducts = [...products]
+
+    if (descripcion !== ""){
+      filterProducts = filterProducts.filter(p => String(p.descripcion).includes(descripcion))
+    }
+
+    filterProducts = filterProducts.filter(p => p.precio>= precioEntre[0] && p.precio<= precioEntre[1])
 
     res.status(200).json({
       data : [
