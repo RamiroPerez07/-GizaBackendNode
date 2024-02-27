@@ -42,7 +42,7 @@ export const sendEmailForgotPassword = async (to: string, token: string): Promis
     subject: "Recuperar contraseña - Giza Perfum",
     html: `
       <p>¡Hola! Nos indicaste que olvidaste tu contraseña. Para recuperarla, ingresá al siguiente link y generá una nueva:</p>
-      <a href="http://localhost:3000/restablecer-clave?token=${token}">Restablecer clave</a>
+      <a href="https://giza-frontend-react.vercel.app/restablecer-clave?token=${token}">Restablecer clave</a>
     `
   }
 

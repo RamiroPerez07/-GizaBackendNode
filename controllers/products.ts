@@ -67,8 +67,6 @@ export const getProductsByFilters = async (req: Request, res: Response) => {
 
     filterProducts = filterProducts.filter(p => p.precio>= precioEntre[0] && p.precio<= precioEntre[1])
 
-    console.log(marca, categoria, descripcion, precioEntre)
-
     res.status(200).json({
       data : [
         ...filterProducts
