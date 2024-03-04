@@ -12,6 +12,8 @@ export const createProduct = async (req: Request, res: Response) => {
     ...productData,
     creadoPor: usuarioId,
     createdAt: new Date(),
+    actualizadoPor: usuarioId,
+    updatedAt: new Date(),
   }
 
   const product = new Product(data);
@@ -21,6 +23,30 @@ export const createProduct = async (req: Request, res: Response) => {
   res.status(201).json({
     product
   })
+}
+
+export const editProduct = async (req: Request, res: Response) => {
+  const usuarioId : ObjectId = req.body.usuarioConfirmado._id;
+  const {_id, descripcion, categoria, marca, imagen, precio, descuento, estado} = req.body
+
+  //cambio la data del producto
+  await Product.findOneAndUpdate(
+    {_id: _id},
+    {
+      descripcion: descripcion,
+      categoria: categoria,
+      marca: marca,
+      imagen: imagen,
+      precio: precio,
+      descuento: descuento,
+      estado: estado,
+      actualizadoPor: usuarioId,
+      updatedAt: new Date(),
+    })
+
+  res.status(200).json({
+    msg: "El producto se modifico exitosamente"
+  });
 }
 
 export const getProducts = async (req: Request, res: Response) => {

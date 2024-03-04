@@ -2,6 +2,8 @@ import { Model, Schema, model, Types } from "mongoose";
 
 export interface IProduct {
   creadoPor: Types.ObjectId;
+  actualizadoPor: Types.ObjectId;
+  updatedAt: Date;
   descripcion: String;
   marca: String;
   categoria: String;
@@ -14,6 +16,11 @@ export interface IProduct {
 
 const ProductSchema = new Schema<IProduct>({
   creadoPor: {
+    type: Schema.Types.ObjectId,
+    ref: "Usuario",
+    required: true,
+  },
+  actualizadoPor: {
     type: Schema.Types.ObjectId,
     ref: "Usuario",
     required: true,
@@ -47,6 +54,10 @@ const ProductSchema = new Schema<IProduct>({
     required: true,
   },
   createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
     type: Date,
     default: Date.now,
   },
