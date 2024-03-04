@@ -29,6 +29,7 @@ export const editProduct = async (req: Request, res: Response) => {
   const usuarioId : ObjectId = req.body.usuarioConfirmado._id;
   const {_id, descripcion, categoria, marca, imagen, precio, descuento, estado} = req.body
 
+  console.log(_id, descripcion, categoria, marca, imagen, precio, descuento, estado)
   //cambio la data del producto
   await Product.findOneAndUpdate(
     {_id: _id},
