@@ -89,7 +89,7 @@ export const getProductsByFilters = async (req: Request, res: Response) => {
     let filterProducts = [...products]
 
     if (descripcion !== ""){
-      filterProducts = filterProducts.filter(p => String(p.descripcion).includes(descripcion))
+      filterProducts = filterProducts.filter(p => String(p.descripcion).toLowerCase().includes(String(descripcion).toLowerCase()))
     }
 
     filterProducts = filterProducts.filter(p => p.precio>= precioEntre[0] && p.precio<= precioEntre[1])
