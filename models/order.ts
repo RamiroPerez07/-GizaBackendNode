@@ -1,9 +1,14 @@
 import { Model, Schema, Types, model } from "mongoose";
 
 interface IItem {
-  id: Number;
+  idProducto: Types.ObjectId;
   descripcion: String;
+  marca: String;
+  categoria: String;
   precio: Number;
+  imagen: String;
+  descuento: Number;
+  estado: String;
   cantidad: Number;
 }
 
@@ -35,17 +40,38 @@ const OrderSchema = new Schema<IOrder>({
   items: {
     type: [
       {
-        id: {
-          type: Number,
+        idProducto: {
+          type: Schema.Types.ObjectId,
+          ref: "Product",
           required: true,
         },
         descripcion: {
           type: String,
           required: true,
         },
+        marca: {
+          type: String,
+          required: true,
+        },
+        categoria:{
+          type: String,
+          required: true,
+        },
         precio: {
           type: Number,
           required: true,
+        },
+        imagen: {
+          type: String,
+          required: false,
+        },
+        descuento: {
+          type: Number,
+          required: false,
+        },
+        estado: {
+          type: Number,
+          required: false,
         },
         cantidad: {
           type: Number,
