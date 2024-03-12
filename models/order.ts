@@ -70,7 +70,7 @@ const OrderSchema = new Schema<IOrder>({
           required: false,
         },
         estado: {
-          type: Number,
+          type: String,
           required: false,
         },
         cantidad: {
