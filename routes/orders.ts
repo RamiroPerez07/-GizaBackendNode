@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createOrder, getOrders } from "../controllers/orders";
+import { createOrder, findOrderByID, getOrders } from "../controllers/orders";
 import validarJWT from "../middlewares/validarJWT";
 import { recolectarErrores } from "../middlewares/recolectarErrores";
 import { isVerified } from "../middlewares/validarVerificado";
@@ -27,6 +27,16 @@ router.post("/",
     recolectarErrores,
   ],
   createOrder
+)
+
+//buscar una orden por id
+router.post("/find-order-by-id",
+  [
+    validarJWT,
+    isVerified,
+    recolectarErrores,
+  ],
+  findOrderByID
 )
 
 export default router
