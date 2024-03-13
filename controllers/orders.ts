@@ -46,24 +46,33 @@ export const findOrderByID = async (req: Request, res: Response) => {
 
   const {idPedido} = req.body
 
-  const order : IOrder | null = await Order.findOne({_id: idPedido})
-
-  if (!order){
-    res.status(404).json({
-      msg: errors.NO_ENCONTRADO,
+  try {
+    
+    const order : IOrder | null = await Order.findOne({_id: idPedido})
+  
+    if (!order){
+      res.status(404).json({
+        msg: errors.NO_ENCONTRADO,
+      })
+      return
+    }
+  
+    if ( order.usuario.toString() !== String(usuarioId) ){
+      res.status(401).json({
+        msg: errors.SIN_AUTENTICACION,
+      })
+      return
+    }
+  
+  
+    res.status(200).json({
+      order
     })
-    return
+
+  } catch (error) {
+    res.status(500).json({
+      msg: errors.ERROR_EN_EL_SERVIDOR
+    })
   }
 
-  if ( order.usuario.toString() !== String(usuarioId) ){
-    res.status(401).json({
-      msg: errors.SIN_AUTENTICACION,
-    })
-    return
-  }
-
-
-  res.status(200).json({
-    order
-  })
 }
