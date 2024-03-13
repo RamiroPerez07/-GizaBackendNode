@@ -55,12 +55,9 @@ export const findOrderByID = async (req: Request, res: Response) => {
     return
   }
 
-  if ( order.usuario.toString() === String(usuarioId) ){
+  if ( order.usuario.toString() !== String(usuarioId) ){
     res.status(401).json({
       msg: errors.SIN_AUTENTICACION,
-      ordenUsuario: order.usuario.toString(),
-      solicitante: String(usuarioId),
-      verify: order.usuario.toString() === String(usuarioId)
     })
     return
   }
