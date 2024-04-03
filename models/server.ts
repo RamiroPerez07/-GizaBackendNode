@@ -6,6 +6,7 @@ import cors from "cors";
 import authRoutes from "../routes/auth"
 import orderRoutes from "../routes/orders"
 import productsRoutes from "../routes/products"
+import mercadoPagoRoutes from "../routes/mercadoPago"
 //
 import { dbConnection } from "../database/config";   //funcion que conecta a la base de datos
 
@@ -16,6 +17,7 @@ export class Server{
   authPath: string
   ordersPath: string
   productsPath: string
+  paymentPath: string
   //issuesPath : string
 
   constructor() {
@@ -24,6 +26,7 @@ export class Server{
     this.authPath = "/auth";
     this.ordersPath = "/orders";
     this.productsPath = "/products";
+    this.paymentPath = "/payment";
     //this.issuesPath = "/issues"
     this.conectarDB();
     this.middlewares();
@@ -43,6 +46,7 @@ export class Server{
     this.app.use(this.authPath, authRoutes)
     this.app.use(this.ordersPath, orderRoutes)
     this.app.use(this.productsPath, productsRoutes)
+    this.app.use(this.paymentPath, mercadoPagoRoutes)
   }
 
   listen(): void {
