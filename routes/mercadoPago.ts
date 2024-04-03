@@ -12,8 +12,8 @@ const router = Router()
 router.post(
   "/create-preference",
   [
-    isVerified,
     validarJWT,
+    isVerified,
     recolectarErrores,
   ],
   createPreference
