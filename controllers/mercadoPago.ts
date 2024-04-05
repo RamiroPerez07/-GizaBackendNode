@@ -12,10 +12,7 @@ export const createPreference = async (req: Request, res: Response) => {
       price: number; 
     }
     
-    const items : Item[] = req.body
-
-    console.log(items)
-
+    const items: Item[] = req.body.items
   
     let products = items.map(item => {
       return{
