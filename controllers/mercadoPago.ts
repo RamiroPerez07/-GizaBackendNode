@@ -14,6 +14,8 @@ export const createPreference = async (req: Request, res: Response) => {
     
     const items : Item[] = req.body
 
+    console.log(items)
+
   
     let products = items.map(item => {
       return{
