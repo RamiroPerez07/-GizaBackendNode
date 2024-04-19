@@ -16,7 +16,7 @@ router.post(
   createPreference
 )
 
-router.post(
+router.get(
   "/pay-success",
   getPaySuccess,
 )

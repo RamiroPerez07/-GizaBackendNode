@@ -62,6 +62,8 @@ export const getPaySuccess = async (req: Request, res: Response) => {
 
   const{payment_id, status, external_reference, merchant_order_id} = req.body; //obtengo los parametros
 
+  console.log(payment_id, status, external_reference, merchant_order_id)
+
   await Order.findOneAndUpdate(
     {_id: external_reference},
     {
