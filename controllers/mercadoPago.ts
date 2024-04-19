@@ -44,6 +44,8 @@ export const createPreference = async (req: Request, res: Response) => {
 
     const result = await preference.create({body});
 
+    console.log(result)
+
     res.status(200).json({
       id: result.id,
     })
