@@ -25,6 +25,10 @@ export interface IOrder {
   detalleContacto: IDetalleOrden;
   estado: String;
   monto: Number;
+  idPago: String;  //parametros que devuelve MP
+  estadoPago: String; //parametros que devuelve MP  
+  referenciaExterna: String; //parametros que devuelve MP
+  idPedidoComercianteMP: String; //parametros que devuelve MP
 }
 
 const OrderSchema = new Schema<IOrder>({
@@ -103,7 +107,23 @@ const OrderSchema = new Schema<IOrder>({
   monto: {
     type: Number,
     required: true
-  }
+  },
+  idPago: {
+    type: String,
+    default: "",
+  },  //parametros que devuelve MP
+  estadoPago: {
+    type: String,
+    default: "",
+  }, //parametros que devuelve MP  
+  referenciaExterna: {
+    type: String,
+    default: "",
+  }, //parametros que devuelve MP
+  idPedidoComercianteMP: {
+    type: String,
+    default: "",
+  }, //parametros que devuelve MP
 })
 
 const Order: Model<IOrder> = model<IOrder>("Order", OrderSchema);
