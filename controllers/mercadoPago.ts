@@ -62,5 +62,5 @@ export const createPreference = async (req: Request, res: Response) => {
 
 
 export const notifyPayment = async (req: Request, res: Response) => {
-  console.log(req.query)
+  console.log(req.body)
 }
