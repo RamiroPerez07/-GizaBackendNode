@@ -63,4 +63,8 @@ export const createPreference = async (req: Request, res: Response) => {
 
 export const notifyPayment = async (req: Request, res: Response) => {
   console.log(req.body)
+
+  res.status(200).json({
+    msg: "Notificacion recibida"
+  })
 }
