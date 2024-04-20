@@ -1,6 +1,7 @@
 import { Request, Response } from "express"
-import {MercadoPagoConfig,  Preference } from "mercadopago" //SDK de mercado pago
-import Order from "../models/order";
+import {MercadoPagoConfig,  Payment,  Preference } from "mercadopago" //SDK de mercado pago
+import mercadopago from "mercadopago";
+import { errors } from "../errors";
 
 
 export const createPreference = async (req: Request, res: Response) => {
@@ -62,9 +63,27 @@ export const createPreference = async (req: Request, res: Response) => {
 
 
 export const notifyPayment = async (req: Request, res: Response) => {
-  console.log(req.body)
 
-  res.status(200).json({
-    msg: "Notificacion recibida"
+  const client = new MercadoPagoConfig({
+    accessToken : String(process.env.ACCESSTOKENMP),
   })
+
+  const query = req.body;
+  
+  const topic = query.topic || query.type;
+
+  try {
+    if(topic === "payment"){
+      const paymentId = query.id || query["data.id"]
+      const payment = new Payment(client)
+      const paymentData = await payment.get(paymentId)
+      res.status(200).json({
+        paymentData
+      })
+    }
+  } catch (error) {
+    res.status(500).json({
+      msg: errors.ERROR_EN_EL_SERVIDOR,
+    })
+  }
 }
