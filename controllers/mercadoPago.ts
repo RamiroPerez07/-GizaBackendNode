@@ -34,6 +34,7 @@ export const createPreference = async (req: Request, res: Response) => {
         failure: "https://giza-frontend-react.vercel.app/pago-aprobado",
         pending: "https://giza-frontend-react.vercel.app/pago-aprobado",
       },
+      notification_url: "https://giza-backend-node.vercel.app/payment/notify",
       auto_return: "approved",
     }
     
@@ -60,4 +61,6 @@ export const createPreference = async (req: Request, res: Response) => {
 
 
 
-
+export const notifyPayment = async (req: Request, res: Response) => {
+  console.log(req.query)
+}

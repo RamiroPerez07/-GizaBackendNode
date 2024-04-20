@@ -1,7 +1,7 @@
 import { Router} from "express";
 import validarJWT from "../middlewares/validarJWT";
 import { isVerified } from "../middlewares/validarVerificado";
-import { createPreference, getPaySuccess } from "../controllers/mercadoPago";
+import { createPreference, notifyPayment } from "../controllers/mercadoPago";
 
 
 
@@ -16,7 +16,10 @@ router.post(
   createPreference
 )
 
-
+router.get(
+  "/notify",
+  notifyPayment
+)
 
 router
 
