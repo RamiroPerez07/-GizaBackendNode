@@ -76,9 +76,9 @@ export const notifyPayment = async (req: Request, res: Response) => {
     if(topic === "payment"){
       const paymentId = query.id || query["data.id"]
       const payment = new Payment(client)
-      console.log(payment)
-      const paymentData = await payment.get(paymentId)
-      console.log(paymentData)
+      console.log("el paiment es", payment)
+      const paymentData = await payment.get({id:paymentId})
+      console.log("el data del pago es ", paymentData)
       res.status(200).json({
         paymentData
       })
