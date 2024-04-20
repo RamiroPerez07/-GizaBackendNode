@@ -16,20 +16,6 @@ router.post(
   createPreference
 )
 
-router.post(
-  "/pay-success",
-  getPaySuccess,
-)
-
-// router.post(
-//   "/pay-failure",
-//   getPayFailure,
-// )
-
-// router.post(
-//   "/pay-pending",
-//   getPayPending,
-// )
 
 
 router
