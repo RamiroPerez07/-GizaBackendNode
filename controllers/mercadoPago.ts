@@ -15,6 +15,8 @@ export const createPreference = async (req: Request, res: Response) => {
     
     const items: Item[] = req.body.items
 
+    const external_reference = req.body.external_reference
+
     console.log(items)
   
     let products = items.map(item => {
@@ -29,6 +31,7 @@ export const createPreference = async (req: Request, res: Response) => {
     
     const body : any = {
       items: products,
+      external_reference: external_reference,
       back_urls: {
         success: "https://giza-frontend-react.vercel.app/pago-aprobado",
         failure: "https://giza-frontend-react.vercel.app/pago-aprobado",
@@ -83,6 +86,10 @@ export const notifyPayment = async (req: Request, res: Response) => {
       payment.get({id:Number(paymentId)})
       .then(dataPayment => {
         console.log(dataPayment);
+        if(dataPayment.status === "approved"){
+          console.log("PAGO APROBADO")
+          //codigo actualizando el pedido
+        }
         res.status(200).json({
           dataPayment
         })
