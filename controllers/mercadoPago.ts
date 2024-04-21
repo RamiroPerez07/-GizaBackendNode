@@ -78,6 +78,7 @@ export const notifyPayment = async (req: Request, res: Response) => {
       const paymentId = query.id || query["data.id"]
       const payment = new Payment(client)
       console.log("el paiment es", payment)
+      console.log("el id es", paymentId)
       const paymentData = await payment.get({id:Number(paymentId)})
       console.log("el data del pago es ", paymentData)
       res.status(200).json({
