@@ -84,14 +84,14 @@ export const notifyPayment = async (req: Request, res: Response) => {
       console.log("el id es", paymentId)
       const dataPayment = await payment.get({id:Number(paymentId)})
       if(dataPayment.status === "approved"){
-        await Order.findOneAndUpdate(
-          {_id: dataPayment.external_reference},
-          {
-            idPago: String(paymentId),  //parametros que devuelve MP
-            estadoPago: "aprobado", //parametros que devuelve MP  
-            referenciaExterna: dataPayment.external_reference, //parametros que devuelve MP
-            idPedidoComercianteMP: dataPayment.merchant_account_id, //parametros que devuelve MP
-          })
+        // await Order.findOneAndUpdate(
+        //   {_id: dataPayment.external_reference},
+        //   {
+        //     idPago: String(paymentId),  //parametros que devuelve MP
+        //     estadoPago: "aprobado", //parametros que devuelve MP  
+        //     referenciaExterna: dataPayment.external_reference, //parametros que devuelve MP
+        //     idPedidoComercianteMP: dataPayment.merchant_account_id, //parametros que devuelve MP
+        //   })
       }
         res.status(200).json({
           dataPayment
