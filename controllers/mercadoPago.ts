@@ -75,6 +75,7 @@ export const notifyPayment = async (req: Request, res: Response) => {
 
   try {
     if(topic === "payment"){
+      console.log("La query es", query)
       const paymentId = query.id || query["data.id"]
       const payment = new Payment(client)
       console.log("el paiment es", payment)
