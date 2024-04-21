@@ -1,6 +1,5 @@
 import { Request, Response } from "express"
 import {MercadoPagoConfig,  Payment,  Preference } from "mercadopago" //SDK de mercado pago
-import mercadopago from "mercadopago";
 import { errors } from "../errors";
 
 
@@ -64,6 +63,8 @@ export const createPreference = async (req: Request, res: Response) => {
 
 export const notifyPayment = async (req: Request, res: Response) => {
 
+  
+
   const client = new MercadoPagoConfig({
     accessToken : String(process.env.ACCESSTOKENMP),
   })
@@ -77,7 +78,7 @@ export const notifyPayment = async (req: Request, res: Response) => {
       const paymentId = query.id || query["data.id"]
       const payment = new Payment(client)
       console.log("el paiment es", payment)
-      const paymentData = await payment.get({id:paymentId})
+      const paymentData = await payment.get({id:Number(paymentId)})
       console.log("el data del pago es ", paymentData)
       res.status(200).json({
         paymentData
