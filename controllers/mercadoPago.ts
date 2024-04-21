@@ -1,6 +1,7 @@
 import { Request, Response } from "express"
 import {MercadoPagoConfig,  Payment,  Preference } from "mercadopago" //SDK de mercado pago
 import { errors } from "../errors";
+import Order from "../models/order";
 
 
 export const createPreference = async (req: Request, res: Response) => {
@@ -66,8 +67,6 @@ export const createPreference = async (req: Request, res: Response) => {
 
 export const notifyPayment = async (req: Request, res: Response) => {
 
-  
-
   const client = new MercadoPagoConfig({
     accessToken : String(process.env.ACCESSTOKENMP),
   })
@@ -83,27 +82,24 @@ export const notifyPayment = async (req: Request, res: Response) => {
       const payment = new Payment(client)
       console.log("el paiment es", payment)
       console.log("el id es", paymentId)
-      payment.get({id:Number(paymentId)})
-      .then(dataPayment => {
-        console.log(dataPayment);
-        if(dataPayment.status === "approved"){
-          console.log("PAGO APROBADO")
-          //codigo actualizando el pedido
-        }
+      const dataPayment = await payment.get({id:Number(paymentId)})
+      if(dataPayment.status === "approved"){
+        await Order.findOneAndUpdate(
+          {_id: dataPayment.external_reference},
+          {
+            idPago: String(paymentId),  //parametros que devuelve MP
+            estadoPago: "aprobado", //parametros que devuelve MP  
+            referenciaExterna: dataPayment.external_reference, //parametros que devuelve MP
+            idPedidoComercianteMP: dataPayment.merchant_account_id, //parametros que devuelve MP
+          })
+      }
         res.status(200).json({
           dataPayment
         })
+      }
+    } catch (error) {
+      res.status(500).json({
+        msg: errors.ERROR_EN_EL_SERVIDOR,
       })
-      .catch(err => {
-        console.log(err);
-        res.status(500).json({
-          msg: errors.ERROR_EN_EL_SERVIDOR
-        })
-      })
-    }
-  } catch (error) {
-    res.status(500).json({
-      msg: errors.ERROR_EN_EL_SERVIDOR,
-    })
   }
 }
