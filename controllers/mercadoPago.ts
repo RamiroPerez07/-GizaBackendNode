@@ -79,10 +79,18 @@ export const notifyPayment = async (req: Request, res: Response) => {
       const payment = new Payment(client)
       console.log("el paiment es", payment)
       console.log("el id es", paymentId)
-      const paymentData = await payment.get({id:Number(paymentId)})
-      console.log("el data del pago es ", paymentData)
-      res.status(200).json({
-        paymentData
+      payment.get({id:Number(paymentId)})
+      .then(dataPayment => {
+        console.log(dataPayment);
+        res.status(200).json({
+          dataPayment
+        })
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json({
+          msg: errors.ERROR_EN_EL_SERVIDOR
+        })
       })
     }
   } catch (error) {
