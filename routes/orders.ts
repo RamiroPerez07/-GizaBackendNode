@@ -18,7 +18,7 @@ router.get("/",
 )
 
 //obtener todas las ordenes de todos los usuarios (SOLO PARA ADMIN)
-router.post("/get-all-orders",
+router.get("/get-all-orders",
 [
   validarJWT,
   isVerified,
