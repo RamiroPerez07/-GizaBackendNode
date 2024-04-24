@@ -17,6 +17,19 @@ export const getOrders = async (req: Request, res: Response) => {
 
 }
 
+export const getAllOrders = async (req: Request, res: Response) => {
+
+  const orders = await Order.find({});
+
+  res.status(200).json({
+    data : [
+      ...orders
+    ]
+  })
+
+}
+
+
 export const createOrder = async (req: Request , res: Response) => {
 
   const usuarioId : ObjectId = req.body.usuarioConfirmado._id;

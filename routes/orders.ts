@@ -1,13 +1,14 @@
 import { Router } from "express";
-import { createOrder, findOrderByID, getOrders } from "../controllers/orders";
+import { createOrder, findOrderByID, getAllOrders, getOrders } from "../controllers/orders";
 import validarJWT from "../middlewares/validarJWT";
 import { recolectarErrores } from "../middlewares/recolectarErrores";
 import { isVerified } from "../middlewares/validarVerificado";
 import { check } from "express-validator";
+import { isAdmin } from "../middlewares/validarRol";
 
 const router = Router();
 
-//obtener todas las ordenes
+//obtener todas las ordenes de un usuario
 router.get("/",
   [
     validarJWT,
@@ -15,6 +16,17 @@ router.get("/",
   ],
   getOrders
 )
+
+//obtener todas las ordenes de todos los usuarios (SOLO PARA ADMIN)
+router.post("/get-all-orders",
+[
+  validarJWT,
+  isVerified,
+  isAdmin,
+  recolectarErrores,
+],
+getAllOrders)
+
 
 //crear una orden, para eso usamos el post
 router.post("/",
