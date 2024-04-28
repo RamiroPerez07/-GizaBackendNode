@@ -55,3 +55,27 @@ export const sendEmailForgotPassword = async (to: string, token: string): Promis
     console.log("Error al enviar el correo electrónico: ", error)
   }
 }
+
+export const sendEmailFromContact = async (contact: string,fromEmail:string, cellphone: string,  message: string):Promise<void> => {
+  const mailOptions = {
+    from: '"Giza" gizaperfum@gmail.com',
+    to: "gizaperfum@gmail.com",
+    subject: `Nueva consulta - ${contact} - Giza Perfum`,
+    html: `
+      <p>${contact}</p>
+      <p>Email: ${fromEmail}</p>
+      <p>Teléfono:${cellphone}</p>
+      <p>Te envió:</p>
+      <p>${message}</p>
+    `
+  }
+
+  try {
+
+    await transporter.sendMail(mailOptions);
+    console.log("Correo electrónico enviado")
+  
+  } catch (error) {
+    console.log("Error al enviar el correo electrónico: ", error)
+  }
+}

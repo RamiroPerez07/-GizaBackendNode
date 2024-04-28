@@ -3,10 +3,11 @@ import express, {Express} from "express"
 import cors from "cors";
 //
 // rutas
-import authRoutes from "../routes/auth"
-import orderRoutes from "../routes/orders"
-import productsRoutes from "../routes/products"
-import mercadoPagoRoutes from "../routes/mercadoPago"
+import authRoutes from "../routes/auth";
+import orderRoutes from "../routes/orders";
+import productsRoutes from "../routes/products";
+import mercadoPagoRoutes from "../routes/mercadoPago";
+import contactRoutes from "../routes/contact";
 //
 import { dbConnection } from "../database/config";   //funcion que conecta a la base de datos
 
@@ -18,6 +19,7 @@ export class Server{
   ordersPath: string
   productsPath: string
   paymentPath: string
+  contactPath: string
   //issuesPath : string
 
   constructor() {
@@ -27,6 +29,7 @@ export class Server{
     this.ordersPath = "/orders";
     this.productsPath = "/products";
     this.paymentPath = "/payment";
+    this.contactPath = "/contact";
     //this.issuesPath = "/issues"
     this.conectarDB();
     this.middlewares();
@@ -47,6 +50,7 @@ export class Server{
     this.app.use(this.ordersPath, orderRoutes)
     this.app.use(this.productsPath, productsRoutes)
     this.app.use(this.paymentPath, mercadoPagoRoutes)
+    this.app.use(this.contactPath, contactRoutes)
   }
 
   listen(): void {
