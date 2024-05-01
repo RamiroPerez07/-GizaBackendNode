@@ -29,6 +29,8 @@ export interface IOrder {
   estadoPago: String; //parametros que devuelve MP  
   referenciaExterna: String; //parametros que devuelve MP
   idPedidoComercianteMP: String; //parametros que devuelve MP
+  actualizadoPor: Types.ObjectId;
+  updatedAt: Date;
 }
 
 const OrderSchema = new Schema<IOrder>({
@@ -124,6 +126,15 @@ const OrderSchema = new Schema<IOrder>({
     type: String,
     default: "",
   }, //parametros que devuelve MP
+  actualizadoPor: {
+    type: Schema.Types.ObjectId,
+    ref: "Usuario",
+    required: true,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
 })
 
 const Order: Model<IOrder> = model<IOrder>("Order", OrderSchema);

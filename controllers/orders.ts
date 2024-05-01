@@ -7,25 +7,40 @@ export const getOrders = async (req: Request, res: Response) => {
 
   const usuarioId : ObjectId = req.body.usuarioConfirmado._id;
 
-  const orders = await Order.find({usuario: usuarioId});
+  try {
+    const orders = await Order.find({usuario: usuarioId});
+  
+    res.status(200).json({
+      data : [
+        ...orders
+      ]
+    })
+  } catch (error) {
+    res.status(500).json({
+      msg: errors.ERROR_EN_EL_SERVIDOR
+    })
+  }
 
-  res.status(200).json({
-    data : [
-      ...orders
-    ]
-  })
 
 }
 
 export const getAllOrders = async (req: Request, res: Response) => {
 
-  const orders = await Order.find({});
+  try {
+    const orders = await Order.find({});
+  
+    res.status(200).json({
+      data : [
+        ...orders
+      ]
+    })
+    
+  } catch (error) {
+    res.status(500).json({
+      msg: errors.ERROR_EN_EL_SERVIDOR
+    })
+  }
 
-  res.status(200).json({
-    data : [
-      ...orders
-    ]
-  })
 
 }
 
@@ -40,16 +55,27 @@ export const createOrder = async (req: Request , res: Response) => {
     ...orderData,
     usuario: usuarioId,
     createdAt: new Date(),
-    estado: "En Preparación"
+    estado: "En Preparación",
+    updatedAt: new Date(),
+    actualizadoPor: usuarioId,
   }
 
-  const order = new Order(data);
+  try {
+    
+    const order = new Order(data);
+  
+    await order.save();
+  
+    res.status(201).json({
+      order
+    })
 
-  await order.save();
+  } catch (error) {
+    res.status(500).json({
+      msg: errors.ERROR_EN_EL_SERVIDOR
+    })
+  }
 
-  res.status(201).json({
-    order
-  })
 
 }
 
@@ -88,4 +114,33 @@ export const findOrderByID = async (req: Request, res: Response) => {
     })
   }
 
+}
+
+
+export const changeOrderStatus = async (req: Request, res: Response) => {
+  const usuarioId : ObjectId = req.body.usuarioConfirmado._id;
+  const {_id, estado} = req.body;
+
+  try {
+    
+    //cambio la data del producto
+    await Order.findOneAndUpdate(
+      {_id: _id},
+      {
+        estado: estado,
+        actualizadoPor: usuarioId,
+        updatedAt: new Date(),
+      })
+  
+    res.status(200).json({
+      msg: "El pedido se modifico exitosamente"
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+      msg: errors.ERROR_EN_EL_SERVIDOR
+    });
+
+  }
 }

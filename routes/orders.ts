@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createOrder, findOrderByID, getAllOrders, getOrders } from "../controllers/orders";
+import { changeOrderStatus, createOrder, findOrderByID, getAllOrders, getOrders } from "../controllers/orders";
 import validarJWT from "../middlewares/validarJWT";
 import { recolectarErrores } from "../middlewares/recolectarErrores";
 import { isVerified } from "../middlewares/validarVerificado";
@@ -49,6 +49,16 @@ router.post("/find-order-by-id",
     recolectarErrores,
   ],
   findOrderByID
+)
+
+//editar estado de pedido
+router.post("/change-order-status", 
+  [
+    validarJWT,
+    isVerified,
+    recolectarErrores,
+  ],
+  changeOrderStatus
 )
 
 export default router
