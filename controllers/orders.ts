@@ -144,3 +144,30 @@ export const changeOrderStatus = async (req: Request, res: Response) => {
 
   }
 }
+
+
+export const payOrder = async (req: Request, res: Response) => {
+
+  const {_id, estadoPago} = req.body;
+
+  try {
+    
+    //cambio la data del producto
+    await Order.findOneAndUpdate(
+      {_id: _id},
+      {
+        estadoPago: estadoPago,
+      })
+  
+    res.status(200).json({
+      msg: "El pedido se modifico exitosamente"
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+      msg: errors.ERROR_EN_EL_SERVIDOR
+    });
+
+  }
+}

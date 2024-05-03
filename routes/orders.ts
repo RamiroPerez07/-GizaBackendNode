@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { changeOrderStatus, createOrder, findOrderByID, getAllOrders, getOrders } from "../controllers/orders";
+import { changeOrderStatus, createOrder, findOrderByID, getAllOrders, getOrders, payOrder } from "../controllers/orders";
 import validarJWT from "../middlewares/validarJWT";
 import { recolectarErrores } from "../middlewares/recolectarErrores";
 import { isVerified } from "../middlewares/validarVerificado";
@@ -60,6 +60,17 @@ router.post("/change-order-status",
   ],
   changeOrderStatus
 )
+
+//pagar pedido
+router.post("/pay-order", 
+  [
+    validarJWT,
+    isVerified,
+    recolectarErrores,
+  ],
+  payOrder
+)
+
 
 export default router
 
