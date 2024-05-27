@@ -73,7 +73,9 @@ export const notifyPayment = async (req: Request, res: Response) => {
 
   const query = req.body;
   
-  const topic = query.topic || query.type;
+  const topic = query.topic;
+
+  console.log(topic)
 
   try {
     if(topic === "payment"){

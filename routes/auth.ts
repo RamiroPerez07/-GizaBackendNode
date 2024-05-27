@@ -37,6 +37,11 @@ router.post(
 )
 
 router.post("/forgot-password",
+  [
+    check("email","El mail es obligatorio").not().isEmpty(),
+    check("email", "El mail no es válido").isEmail(),
+    recolectarErrores,
+  ],
   forgotPassword
 )
 
