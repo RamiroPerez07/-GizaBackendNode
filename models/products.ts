@@ -52,6 +52,7 @@ const ProductSchema = new Schema<IProduct>({
   estado: {
     type: String,
     required: true,
+    default:"Activo",
   },
   createdAt: {
     type: Date,
